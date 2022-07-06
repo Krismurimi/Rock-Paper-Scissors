@@ -62,6 +62,7 @@ options.forEach((option)=>{
         if(gameWinner()){
             pscore = cscore = 0;
             scoreUpdate();
+            paragraph.textContent = "";
         }
     })
 });
