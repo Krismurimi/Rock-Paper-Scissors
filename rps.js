@@ -1,52 +1,24 @@
-function computerPlay(){
-    const pick= ["rock","paper","scissors"];
-    var randPick = pick[Math.floor(Math.random()* pick.length)];
-    return randPick;
-}
-var compPlay="";
-
-function Player(){
-    let pick= prompt("Pick rock, paper, or scissors:");
-    let playerPick = pick.toLowerCase();
-    return playerPick;
- }
- 
-var playerPlay="";
-;
-
-function playRound(){
-    //computerPlay();
-    compPlay = computerPlay();
-    //Player();
-    playerPlay = Player();
-    console.log(`Player: `+playerPlay);
-    console.log(`Computer: `+compPlay);
+/*function playRound(playerPlay,compPlay){
 
     if (compPlay == playerPlay){
         return `It's a tie! You both picked ${playerPlay}.`;
     }
     else if (
-        (playerPlay == "rock" && compPlay == "scissors")||
-        (playerPlay=="paper" && compPlay == "rock")||
-        (playerPlay == "scissors" && compPlay == "paper")
+        (playerPlay == "rock" && compPlay == "Scissors")||
+        (playerPlay=="Paper" && compPlay == "rock")||
+        (playerPlay == "Scissors" && compPlay == "paper")
     ){
         return `You win! ${playerPlay} beats ${compPlay}.`
     }
     else{
         return `You lose! ${compPlay} beats ${playerPlay}.`
     }
-}
-let result = "";
-
-
-player_score = 0;
-comp_score = 0;
-ties = 0;
+};
 
 function game(){
     for(let round=0; round<5; round++){
-        result = playRound();
-        console.log(result);
+        result = playRound(playerPlay,compPlay);
+       //console.log(result);
 
         if(result ==`It's a tie! You both picked ${playerPlay}.`){
             ties +=1;
@@ -66,13 +38,62 @@ function game(){
     }
     else{
         return `It's a tie!!\nPlayer: ${player_score}\nComputer: ${comp_score}\nTies: ${ties}`
+    }    
+};
+*/
+
+const options = document.querySelectorAll('.options');
+let pscore = 0;
+let cscore = 0;
+
+options.forEach((option)=>{
+    option.addEventListener('click', function(){
+        const pInput = this.textContent;
+
+        const cOptions = ['Rock','Paper','Scissors'];
+        const cInput = cOptions[Math.floor(Math.random()*3)];
+        compare(pInput,cInput);
+        scoreUpdate();
+        if(gameWinner()){
+            pscore = cscore = 0;
+            scoreUpdate();
+        }
+    })
+});
+
+function compare(pInput,cInput){
+    const match = `${pInput} VS ${cInput}`
+    if (pInput == cInput){
+        alert (`${match}. It's a tie!`);
     }
-    
+    else if (
+        (pInput == "Rock" && cInput == "Scissors")||
+        (pInput=="Paper" && cInput == "Rock")||
+        (pInput == "Scissors" && cInput == "Paper")
+    ){
+        pscore++;
+        alert (`${match}. You win!`);
+    }
+    else{
+        cscore ++;
+        alert (`${match}. You lose!`);
+    }
+};
+
+function scoreUpdate(){
+    document.getElementById("p-score").textContent = pscore;
+    document.getElementById("c-score").textContent = cscore;
+};
+
+function gameWinner(){
+    if(pscore === 3 || cscore === 3){
+        const winner =
+        pscore === 3
+
+        ? `Glorious Victory!!`
+        : `You have tasted defeat!!`
+        alert (winner);
+        return true;
+    }
+    return false;
 }
-
-let playGame= game();
-console.log(playGame);
-
-
-
-
