@@ -45,6 +45,10 @@ function game(){
 const options = document.querySelectorAll('.options');
 let pscore = 0;
 let cscore = 0;
+const matchResult = document.querySelector('div');
+const paragraph = document.createElement('p');
+
+matchResult.appendChild(paragraph);
 
 options.forEach((option)=>{
     option.addEventListener('click', function(){
@@ -52,7 +56,8 @@ options.forEach((option)=>{
 
         const cOptions = ['Rock','Paper','Scissors'];
         const cInput = cOptions[Math.floor(Math.random()*3)];
-        compare(pInput,cInput);
+        result = compare(pInput,cInput);
+        paragraph.textContent = `${result}`;
         scoreUpdate();
         if(gameWinner()){
             pscore = cscore = 0;
@@ -64,7 +69,7 @@ options.forEach((option)=>{
 function compare(pInput,cInput){
     const match = `${pInput} VS ${cInput}`
     if (pInput == cInput){
-        alert (`${match}. It's a tie!`);
+        return `${match}. It's a tie!`;
     }
     else if (
         (pInput == "Rock" && cInput == "Scissors")||
@@ -72,11 +77,11 @@ function compare(pInput,cInput){
         (pInput == "Scissors" && cInput == "Paper")
     ){
         pscore++;
-        alert (`${match}. You win!`);
+        return `${match}. You win!`;
     }
     else{
         cscore ++;
-        alert (`${match}. You lose!`);
+        return `${match}. You lose!`;
     }
 };
 
@@ -96,4 +101,4 @@ function gameWinner(){
         return true;
     }
     return false;
-}
+};
